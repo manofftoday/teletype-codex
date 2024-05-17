@@ -1,0 +1,197 @@
+Basic Dual Sequencer
+Version 1
+
+#1
+A P.HERE
+IF NZ A: TR.P A
+P.NEXT
+#2
+B P.HERE
+IF NZ A: CV 1 N Y
+P.NEXT
+#3
+C P.HERE
+IF NZ A: TR TIME C
+P.NEXT
+#4
+D P.HERE
+IF NZ A: CV 2 N MULT D 2
+P.NEXT
+#5
+
+#6
+
+#7
+
+#8
+
+#M
+M BPM 124
+P.N 0; SCRIPT 1
+P.N 1; SCRIPT 2
+P.N 3; SCRIPT 3
+P.N 4; SCRIPT 4
+
+#I
+
+#P
+32	32	32	32
+1	1	1	1
+0	0	0	0
+31	31	31	31
+
+13826	13826	13826	13826
+14082	14082	14082	14082
+14594	14594	14594	14594
+13826	13826	13826	13826
+13826	13826	13826	13826
+14082	14082	14082	14082
+14594	14594	14594	14594
+13826	13826	13826	13826
+14594	14594	14594	14594
+14850	14850	14850	14850
+15364	15364	15364	15364
+14594	14594	14594	14594
+14850	14850	14850	14850
+15364	15364	15364	15364
+15361	15361	15361	15361
+15873	15873	15973	15873
+15361	15361	15361	15361
+14849	14849	14849	14849
+14594	14594	14594	14594
+13826	13826	13826	13826
+15361	15361	15361	15361
+15873	15873	15873	15873
+15361	15361	15361	15361
+14849	14849	14849	14849
+14594	14594	14594	14594
+13826	13826	13826	13826
+13826	13826	13826	13826
+12290	12290	12290	12290
+13828	13828	13828	13828
+13826	13826	13826	13826
+12290	12290	12290	12290
+13828	13828	13828	13828
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+
+#G
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+
+-----------------------------------
+Each note may be up to 127
+metronome intervals long. 
+
+Obscure Constants
+(AKA Magic Numbers)
+0
+      Lowest note
+
+7
+    Number of bits used for
+    Length of note in x & y
+
+8
+    Number of bits reserved
+    For each voice in x & y
+
+127
+    Highest note
+
+127
+    Longest note length
+
+127 binary 01111111
+    Mask value for voice 1 & 3
+
+200 - 255
+    Note range of rests
+
+256
+    Voice 2 & 4 shift value,
+    this allows x/y to track
+    two voices each
+    * 256 i = << i 8
+
+257 = + 256 1 binary 100000001
+    Value added to x(y) to
+    increase time waited in
+    both voices 1 & 3 (2 & 4)
+
+32512 = << 255 8
+    Mask value for voice 2 & 4
+
+32639 binary 1000000010000000
+    Mask to prevent overflow
+    after adding 1 to a voice
+
+Example specific magic numbers
+In this example an 8th note is
+1 metronome interval long.
+
+250
+    Reasonable song speed
+
+29550
+    Start voice 3 after 8
+    metronome triggers,
+    start voice 4 after 12
+    metronome triggers
+    (127-12)* 256 + (127 - 8)
+
+31615
+    Start voice 1 on first
+    metronome trigger,
+    start voice 2 after 4
+    metronome triggers
+    (127-4)* 256 + (127 - 1)
